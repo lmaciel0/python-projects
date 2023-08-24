@@ -66,7 +66,7 @@ def convert_temperature():
                 show_result(result_message)
 
     except ValueError:
-        result_message = "Error: Enter a valid numeric value for the temperature."
+        result_message = "Error: Enter a valid numeric value fo0r the temperature."
         show_result(result_message)
 
 def show_result(result_message):
