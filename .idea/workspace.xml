@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b378f2ce-7fc0-463c-baf7-07c7733d05f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/temperature converter/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b378f2ce-7fc0-463c-baf7-07c7733d05f7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,7 +70,7 @@
       <workItem from="1692720102109" duration="10000" />
       <workItem from="1692720168911" duration="3464000" />
       <workItem from="1692723889513" duration="501000" />
-      <workItem from="1692879981466" duration="5247000" />
+      <workItem from="1692879981466" duration="5845000" />
     </task>
     <servers />
   </component>
