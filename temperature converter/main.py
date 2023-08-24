@@ -40,6 +40,8 @@ def convert_temperature():
         if unit_from == unit_to:
             result_message = "Result: Units are the same."
         else:
+            result = None
+
             if unit_from == "Celsius":
                 if unit_to == "Fahrenheit":
                     result = celsius_to_fahrenheit(temperature)
@@ -56,18 +58,27 @@ def convert_temperature():
                 elif unit_to == "Fahrenheit":
                     result = kelvin_to_fahrenheit(temperature)
 
-            result_message = f"Result: {temperature:.2f} {unit_from} is equal to {result:.2f} {unit_to}"
-            show_result(result_message)
+            if result is not None:
+                result_message = f"Result: {temperature:.2f} {unit_from} is equal to {result:.2f} {unit_to}"
+                show_result(result_message)
+            else:
+                result_message = "Error: Conversion between selected units is not supported."
+                show_result(result_message)
 
     except ValueError:
-        messagebox.showerror("Error", "Enter a valid numeric value for the temperature.")
+        result_message = "Error: Enter a valid numeric value for the temperature."
+        show_result(result_message)
 
 def show_result(result_message):
     messagebox.showinfo("Conversion Result", result_message)
 
 def clear_fields():
-    entry_temperature.delete(0, tk.END)
-    result_label.config(text="Result:")
+    confirmed = messagebox.askyesno("Confirmation", "Are you sure you want to clear all fields?")
+    if confirmed:
+        entry_temperature.delete(0, tk.END)
+        result_label.config(text="")
+        var_unit_from.set("Celsius")    # Reset source unit to default
+        var_unit_to.set("Fahrenheit")   # Reset destination unit to default
 
 # Window configuration
 window = tk.Tk()
@@ -78,14 +89,34 @@ screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
 
 # Define the window width and height
-window_width = 500
-window_height = 500
+window_width = 400
+window_height = 400
 
 # Calculate the x and y coordinates to center the window
 x = (screen_width - window_width) // 2
 y = (screen_height - window_height) // 2
 
-# Set the window's position at the center of the screen
+# Set the minimum and maximum window sizes
+min_width = 400
+min_height = 400
+max_width = 700
+max_height = 700
+
+# Check if the window width and height are less than the minimum values
+if window_width < min_width:
+    window_width = min_width
+
+if window_height < min_height:
+    window_height = min_height
+
+# Check if the window width and height are greater than the maximum values
+if window_width > max_width:
+    window_width = max_width
+
+if window_height > max_height:
+    window_height = max_height
+
+# Set the window's size and position
 window.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
 # Set the font to "Lexend"
@@ -104,7 +135,7 @@ entry_temperature.pack(pady=5)
 
 # Source unit selection
 label_unit_from = tk.Label(window, text="From:", font=font_style)
-label_unit_from.pack()
+label_unit_from.pack(pady=(10, 2))
 
 var_unit_from = tk.StringVar()
 var_unit_from.set("Celsius")
@@ -127,17 +158,24 @@ menu_unit_to = tk.OptionMenu(window, var_unit_to, *unit_options)
 menu_unit_to.config(font=font_style)
 menu_unit_to.pack(pady=5)
 
+# Create a frame to hold the buttons
+button_frame = tk.Frame(window)
+button_frame.pack(pady=(20, 0), padx=50)
+
 # Convert button with larger size
-convert_button = tk.Button(window, text="Convert", command=convert_temperature, font=font_style)
-convert_button.pack(pady=(20, 0))
+convert_button = tk.Button(button_frame, text="Convert", command=convert_temperature, font=font_style)
+convert_button.pack(side=tk.LEFT, padx=10)
 
 # Clear button with larger size
-clear_button = tk.Button(window, text="Clear", command=clear_fields, font=font_style)
-clear_button.pack(pady=(10, 20))
+clear_button = tk.Button(button_frame, text="Clear", command=clear_fields, font=font_style)
+clear_button.pack(side=tk.LEFT, padx=10)
 
 # Result display
-result_label = tk.Label(window, text="Result:", font=font_style)
+result_label = tk.Label(window, font=font_style)
 result_label.pack()
+
+# Center the button frame horizontally
+button_frame.pack(anchor=tk.CENTER)
 
 # Start GUI event loop
 window.mainloop()
